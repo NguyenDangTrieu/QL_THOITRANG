@@ -21,6 +21,7 @@ public class GUI_LOGIN extends javax.swing.JFrame {
      */
     public GUI_LOGIN() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -179,8 +180,7 @@ public class GUI_LOGIN extends javax.swing.JFrame {
             frm_main.setVisible(true);
             this.dispose();
         } else {
-            // Nếu không, hiển thị thông báo lỗi
-            JOptionPane.showMessageDialog(null, "Sai tên đăng nhập hoặc mật khẩu!");
+            JOptionPane.showMessageDialog(this, "Sai tên đăng nhập hoặc mật khẩu!");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
