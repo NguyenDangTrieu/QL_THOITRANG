@@ -148,7 +148,7 @@ public class GUI_LOGIN extends javax.swing.JFrame {
     public static String TenChucVu = "";
     public String getPermission(String username) {
         DataService dataService = new DataService();
-        String TenChucVu = null;
+        String ChucVu = null;
         String query = "select tenchucvu from phieuphanquyen,chucvu where phieuphanquyen.machucvu = chucvu.machucvu and PhieuPhanQUyen.tenTK=?";
         
         try {
@@ -158,7 +158,7 @@ public class GUI_LOGIN extends javax.swing.JFrame {
             
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                TenChucVu = rs.getString("TenChucVu");
+                ChucVu = rs.getString("TenChucVu");
             }
             
             rs.close();
@@ -168,13 +168,13 @@ public class GUI_LOGIN extends javax.swing.JFrame {
             System.out.println("Error fetching data from the database: " + e.getMessage());
         }
         
-        return TenChucVu;
+        return ChucVu;
     }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String username = txtusername.getText(); 
         String password = new String(txtpassword.getPassword());
         TenChucVu = getPermission(getID(username, password));
-
+        JOptionPane.showMessageDialog(this, TenChucVu);
         if (!TenChucVu.isEmpty()) {
             GUI_FORMMAIN frm_main = new GUI_FORMMAIN();
             frm_main.setVisible(true);
