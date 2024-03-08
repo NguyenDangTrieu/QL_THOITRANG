@@ -36,20 +36,34 @@ public class DataService {
         }
     }
 
-    public void fetchDataFromDatabase(String query) {
+    public ResultSet fetchDataFromDatabase(String query) {
+        ResultSet rs = null;
         try {
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery(query);
-            while (rs.next()) {
-                System.out.println(rs.getString(2));
-            }
-            rs.close();
-            st.close();
+            rs = st.executeQuery(query);
         } catch (SQLException e) {
             System.out.println("Error fetching data from the database: " + e.getMessage());
         }
+        return rs;
     }
+    public void executeUpdate(String sql) throws SQLException {
+        if (con == null || con.isClosed()) {
+            throw new SQLException("Connection is not established.");
+        }
 
+        Statement statement = null;
+        try {
+            // Create a statement
+            statement = con.createStatement();
+
+            // Execute the update statement
+            int rowsAffected = statement.executeUpdate(sql);
+        } finally {
+            // Close the statement
+            if (statement != null)
+                statement.close();
+        }
+    }
     public static void main(String[] args) {
         DataService t = new DataService();
         t.connectDatabase();
@@ -57,4 +71,5 @@ public class DataService {
         t.fetchDataFromDatabase("select * from nhanvien");
         t.closeConnection();
     }
+    
 }
