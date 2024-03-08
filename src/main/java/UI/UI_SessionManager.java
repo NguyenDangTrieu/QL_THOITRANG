@@ -2,9 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package GUI;
+package UI;
 
 import DAO.DataService;
+import GUI.GUI_ShowProcess;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author LunChan
  */
-public class GUI_SessionManager extends javax.swing.JPanel {
+public class UI_SessionManager extends javax.swing.JPanel {
      private int process;
 
     public int getProcess() {
@@ -32,7 +33,7 @@ public class GUI_SessionManager extends javax.swing.JPanel {
     /**
      * Creates new form GUI_SessionManager1
      */
-    public GUI_SessionManager() {
+    public UI_SessionManager() {
         initComponents();
         showDataTable(jTable_SessionManager);
 
@@ -150,6 +151,11 @@ public class GUI_SessionManager extends javax.swing.JPanel {
 
         jButton_ShowProcess.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
         jButton_ShowProcess.setText("Xem Process");
+        jButton_ShowProcess.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_ShowProcessActionPerformed(evt);
+            }
+        });
 
         jButton_DeleteSesion.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
         jButton_DeleteSesion.setText("Huỷ Session");
@@ -220,6 +226,11 @@ public class GUI_SessionManager extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jTable_SessionManagerMouseClicked
 
+    private void jButton_ShowProcessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ShowProcessActionPerformed
+        GUI.GUI_ShowProcess gUI_ShowProcess = new GUI_ShowProcess(getProcess());
+        gUI_ShowProcess.setVisible(true);
+    }//GEN-LAST:event_jButton_ShowProcessActionPerformed
+
     /*
     /** 
      * @param args the command line arguments
@@ -238,20 +249,21 @@ public class GUI_SessionManager extends javax.swing.JPanel {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GUI_SessionManager.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UI_SessionManager.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GUI_SessionManager.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UI_SessionManager.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GUI_SessionManager.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UI_SessionManager.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GUI_SessionManager.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UI_SessionManager.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GUI_SessionManager().setVisible(true);
+                new UI_SessionManager().setVisible(true);
             }
         });
     }

@@ -5,6 +5,7 @@
 package GUI;
 
 import DAO.DataService;
+import MAIN.Main;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -78,8 +79,8 @@ public class GUI_LOGIN extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtusername)
                             .addComponent(txtpassword, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(96, Short.MAX_VALUE))
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(90, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -97,15 +98,15 @@ public class GUI_LOGIN extends javax.swing.JFrame {
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtpassword, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(37, 37, 37)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(120, 120, 120))
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(118, 118, 118))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,7 +149,7 @@ public class GUI_LOGIN extends javax.swing.JFrame {
     public static String TenChucVu = "";
     public String getPermission(String username) {
         DataService dataService = new DataService();
-        String ChucVu = null;
+        String TenChucVu = null;
         String query = "select tenchucvu from phieuphanquyen,chucvu where phieuphanquyen.machucvu = chucvu.machucvu and PhieuPhanQUyen.tenTK=?";
         
         try {
@@ -158,7 +159,7 @@ public class GUI_LOGIN extends javax.swing.JFrame {
             
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                ChucVu = rs.getString("TenChucVu");
+                TenChucVu = rs.getString("TenChucVu");
             }
             
             rs.close();
@@ -168,15 +169,15 @@ public class GUI_LOGIN extends javax.swing.JFrame {
             System.out.println("Error fetching data from the database: " + e.getMessage());
         }
         
-        return ChucVu;
+        return TenChucVu;
     }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String username = txtusername.getText(); 
         String password = new String(txtpassword.getPassword());
         TenChucVu = getPermission(getID(username, password));
-        JOptionPane.showMessageDialog(this, TenChucVu);
+
         if (!TenChucVu.isEmpty()) {
-            GUI_FORMMAIN frm_main = new GUI_FORMMAIN();
+            MAIN.Main frm_main = new Main();
             frm_main.setVisible(true);
             this.dispose();
         } else {
