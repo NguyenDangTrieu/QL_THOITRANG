@@ -17,7 +17,7 @@ public class DataService {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             Properties props = new Properties();
             props.setProperty("user", "SYS AS SYSDBA");
-            props.setProperty("password", "123");
+            props.setProperty("password", "sys");
             con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", props);
             System.out.println("Connected to the database.");
         } catch (Exception e) {
@@ -36,7 +36,7 @@ public class DataService {
         }
     }
 
-    public ResultSet fetchDataFromDatabase(String query) {
+   public ResultSet fetchDataFromDatabase(String query) {
         ResultSet rs = null;
         try {
             Statement st = con.createStatement();
@@ -46,24 +46,8 @@ public class DataService {
         }
         return rs;
     }
-    public void executeUpdate(String sql) throws SQLException {
-        if (con == null || con.isClosed()) {
-            throw new SQLException("Connection is not established.");
-        }
 
-        Statement statement = null;
-        try {
-            // Create a statement
-            statement = con.createStatement();
 
-            // Execute the update statement
-            int rowsAffected = statement.executeUpdate(sql);
-        } finally {
-            // Close the statement
-            if (statement != null)
-                statement.close();
-        }
-    }
     public static void main(String[] args) {
         DataService t = new DataService();
         t.connectDatabase();
@@ -71,5 +55,5 @@ public class DataService {
         t.fetchDataFromDatabase("select * from nhanvien");
         t.closeConnection();
     }
-    
+
 }
