@@ -4,12 +4,9 @@
  */
 package GUI;
 
-import DAO.DataService;
-import UI.UI_TABLESPACEJPANEL;
-import java.sql.PreparedStatement;
+import java.sql.CallableStatement;
+import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Statement;
-import javax.print.attribute.standard.MediaSize;
 import javax.swing.JOptionPane;
 
 /**
@@ -147,21 +144,26 @@ public class GUI_TABLESPACE_CREATE extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btn_huyActionPerformed
      public void createTableSpace(String tablespaceName, String dataFileName, int fileSizeInMB) {
-        
-         DataService dataService = new DataService();
-         dataService.connectDatabase();
-         // Sử dụng Statement thay vì PreparedStatement
-         String sql = "CREATE TABLESPACE " + tablespaceName + " DATAFILE 'C:\\APP\\ORACLE\\ORADATA\\ORCL\\" + dataFileName + ".DBF' SIZE " + fileSizeInMB + "M";
-         try (Statement statement = dataService.getCon().createStatement()) {
-             // Thực thi câu lệnh
-             statement.executeUpdate(sql);
-             JOptionPane.showMessageDialog(this, "Success!!");
-             this.dispose();
-             
-         } catch (SQLException e) {
-             JOptionPane.showMessageDialog(this, "Error!!");
-         }
-         dataService.closeConnection();
+        try {
+            // Kết nối đến cơ sở dữ liệu
+            Connection connection = DAO.Dataservice.Getconnect();
+
+            // Tạo callable statement để gọi stored procedure
+            String sql = "{call Proc_CreateTableSpace(?, ?, ?)}";
+            CallableStatement callableStatement = connection.prepareCall(sql);
+
+            // Đặt các tham số cho stored procedure
+            callableStatement.setString(1, tablespaceName);
+            callableStatement.setString(2, dataFileName);
+            callableStatement.setInt(3, fileSizeInMB);
+
+            // Thực thi stored procedure
+            callableStatement.execute();
+            System.out.println("Tablespace " + tablespaceName + " created successfully.");
+        } catch (SQLException e) {
+            // Xử lý lỗi nếu có
+            e.printStackTrace();
+        }
     }
     /**
      * @param args the command line arguments

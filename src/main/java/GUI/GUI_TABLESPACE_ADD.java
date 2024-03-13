@@ -4,13 +4,14 @@
  */
 package GUI;
 
-import DAO.DataService;
-import UI.UI_TABLESPACEJPANEL;
+import java.sql.CallableStatement;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import oracle.jdbc.OracleTypes;
 
 /**
  *
@@ -27,39 +28,53 @@ public class GUI_TABLESPACE_ADD extends javax.swing.JFrame {
         loadTablespaces(cmb_tablespaceName);
     }
     public void loadTablespaces(JComboBox<String> comboBox) {
-            DAO.DataService dataService= new DataService();
-            dataService.connectDatabase();
-            // Truy vấn cơ sở dữ liệu để lấy danh sách tablespace
-            String sql = "SELECT tablespace_name FROM user_tablespaces";
-            try (Statement statement = dataService.getCon().createStatement();
-                    ResultSet resultSet = statement.executeQuery(sql)) {
-                // Xóa tất cả các mục cũ trong combobox
-                comboBox.removeAllItems();
-                
-                // Thêm tên tablespace vào combobox
-                while (resultSet.next()) {
-                    String tablespaceName = resultSet.getString("tablespace_name");
-                    comboBox.addItem(tablespaceName);
-                }
-            } catch (SQLException e) {
-                System.out.println("Error executing query: " + e.getMessage());
-            }
-            dataService.closeConnection();
-        }
-    public void addDataFileToTablespace(String tablespaceName, String dataFileName, int fileSizeInMB) {
-        DataService dataService = new DataService();dataService.connectDatabase();
-        // Sử dụng Statement để thực thi câu lệnh SQL
-        String sql = "ALTER TABLESPACE " + tablespaceName + " ADD DATAFILE 'C:\\APP\\ORACLE\\ORADATA\\ORCL\\" + dataFileName + ".DBF' SIZE " + fileSizeInMB + "M";
-        try (Statement statement = dataService.getCon().createStatement()) {
-            // Thực thi câu lệnh
-            statement.executeUpdate(sql);
-            JOptionPane.showMessageDialog(this, "Success!!");
+        Connection connection = null;
+        CallableStatement callableStatement = null;
+        ResultSet resultSet = null;
+        
+        try {
+            connection = DAO.Dataservice.Getconnect();
+            callableStatement = connection.prepareCall("{Proc_LoadTablespaces(?)}");
+            callableStatement.registerOutParameter(1, OracleTypes.CURSOR);
+            callableStatement.execute();
+            resultSet = (ResultSet) callableStatement.getObject(1);
             
+            comboBox.removeAllItems();
+            while (resultSet.next()) {
+                String tablespaceName = resultSet.getString("tablespace_name");
+                comboBox.addItem(tablespaceName);
+            }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Error!!");
+            System.out.println("Error executing stored procedure: " + e.getMessage());
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (callableStatement != null) callableStatement.close();
+            } catch (SQLException e) {
+                System.out.println("Error closing resources: " + e.getMessage());
+            }
         }
-        dataService.closeConnection();
     }
+    public void addDataFileToTablespace(String tablespaceName, String dataFileName, int fileSizeInMB) {
+    
+    DAO.Dataservice.Connect();
+    
+    // Sử dụng CallableStatement để gọi stored procedure
+    try (CallableStatement cs = DAO.Dataservice.Getconnect().prepareCall("{call Proc_AddDataFileToTablespace(?, ?, ?)}")) {
+        // Thiết lập các tham số đầu vào cho stored procedure
+        cs.setString(1, tablespaceName);
+        cs.setString(2, dataFileName);
+        cs.setInt(3, fileSizeInMB);
+        
+        // Thực thi stored procedure
+        cs.execute();
+        
+        JOptionPane.showMessageDialog(this, "Success!!");
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Error!!");
+    }
+}
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -171,9 +186,8 @@ public class GUI_TABLESPACE_ADD extends javax.swing.JFrame {
     private void btn_bosungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_bosungActionPerformed
         if(txt_datafilename.getText().equalsIgnoreCase("")||txt_size.getText().equalsIgnoreCase(""))
         {
-            JOptionPane.showMessageDialog(this, "Lost Data!!!!!");
+            JOptionPane.showMessageDialog(this, "Thiếu Dữ Liệu!!");
             return;
-            
         }
         addDataFileToTablespace((String)cmb_tablespaceName.getSelectedItem(), txt_datafilename.getText(), Integer.parseInt(txt_size.getText()));
         this.dispose();

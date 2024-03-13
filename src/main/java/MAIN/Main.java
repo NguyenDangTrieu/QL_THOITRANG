@@ -5,15 +5,10 @@
 package MAIN;
 
 
-import GUI.GUI_LOGIN;
-import UI.UI_SEETABLE;
 import SWING.EventMenuSelected;
-import UI.UI_SessionManager;
 import UI.UI_TABLESPACEJPANEL;
 import java.awt.Color;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -21,6 +16,7 @@ import javax.swing.JOptionPane;
  */
 public class Main extends javax.swing.JFrame {
 
+    // Constructor với tham số Session
     
     public Main() {
         initComponents();
@@ -33,28 +29,17 @@ public class Main extends javax.swing.JFrame {
             @Override
             public void selected(int index) {
                 if (index == 0) {
-                    setForm(new UI_SEETABLE());
                 } else if (index == 1) {
-                    if(GUI_LOGIN.getTenChucVu().equalsIgnoreCase("admin"))
-                    {
-                        setForm(new UI_TABLESPACEJPANEL());
-                    }else{
-                        JOptionPane.showMessageDialog(MainPanel, "Not ADMIN");
-                    }
+                   setForm(new UI_TABLESPACEJPANEL());
                     
                 } else if (index == 2) {
-                    if(GUI_LOGIN.getTenChucVu().equalsIgnoreCase("admin"))
-                    {
-                        setForm(new UI_SessionManager());
-                    }else{
-                        JOptionPane.showMessageDialog(MainPanel, "Not ADMIN");
-                    }
                 } else if (index == 8) {
                     System.exit(0);
                 }
             }
         });
     }
+
 
     private void setForm(JComponent com) {
         MainPanel.removeAll();
