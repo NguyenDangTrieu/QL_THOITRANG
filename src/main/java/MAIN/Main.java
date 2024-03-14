@@ -5,10 +5,16 @@
 package MAIN;
 
 
+import static DAO.Dataservice.conn;
 import SWING.EventMenuSelected;
 import UI.UI_TABLESPACEJPANEL;
 import java.awt.Color;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,7 +24,7 @@ public class Main extends javax.swing.JFrame {
 
     // Constructor với tham số Session
     
-    public Main() {
+    public Main() throws SQLException {
         initComponents();
         setBackground(new Color(0, 0, 0, 0)); 
         
@@ -30,16 +36,42 @@ public class Main extends javax.swing.JFrame {
             public void selected(int index) {
                 if (index == 0) {
                 } else if (index == 1) {
-                   setForm(new UI_TABLESPACEJPANEL());
+                    try {
+                        setForm(new UI_TABLESPACEJPANEL());
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     
                 } else if (index == 2) {
                 } else if (index == 8) {
-                    System.exit(0);
+                    int confirmLogout = JOptionPane.showConfirmDialog(rootPane, "Bạn có chắc muốn đăng xuất?", "Xác nhận Đăng Xuất", JOptionPane.YES_NO_OPTION);
+
+                    if (confirmLogout == JOptionPane.YES_OPTION) {
+                        // Thực hiện đăng xuất
+                        boolean success = DAO.Dataservice.logoutUser(DAO.Dataservice.user.toUpperCase());
+
+                        if (success) {
+                            JOptionPane.showMessageDialog(rootPane, "Đăng Xuất Thành Công");
+                            dispose(); // Đóng cửa sổ hiện tại sau khi đăng xuất thành công
+                        } else {
+                            JOptionPane.showMessageDialog(rootPane,"Đăng xuất không thành công.");
+                        }
+                    } else {
+                        // Người dùng không muốn đăng xuất, không thực hiện hành động gì
+                    }
                 }
             }
         });
+        ThongBao(conn);
     }
 
+    public void ThongBao(Connection conn) throws SQLException{
+        if(conn.isClosed())
+        {
+            JOptionPane.showMessageDialog(rootPane, "Phiên Đã Hết Hạn!", "Thông Báo", HEIGHT);
+            System.exit(0);
+        }
+    }
 
     private void setForm(JComponent com) {
         MainPanel.removeAll();
@@ -70,22 +102,22 @@ public class Main extends javax.swing.JFrame {
             .addGroup(panelBorder1Layout.createSequentialGroup()
                 .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(MainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 830, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(MainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 830, Short.MAX_VALUE)
+                .addContainerGap())
         );
         panelBorder1Layout.setVerticalGroup(
             panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, 504, Short.MAX_VALUE)
-            .addComponent(MainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(MainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(panelBorder1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(panelBorder1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -100,7 +132,11 @@ public class Main extends javax.swing.JFrame {
     public static void main(String args[]) {     
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Main().setVisible(true);
+                try {
+                    new Main().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

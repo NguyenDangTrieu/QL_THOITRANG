@@ -6,6 +6,9 @@ package GUI;
 
 import MAIN.Main;
 import MODEL.MODEL_Session;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -19,6 +22,7 @@ public class GUI_LOGIN extends javax.swing.JFrame {
      */
     public GUI_LOGIN() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -138,7 +142,12 @@ public class GUI_LOGIN extends javax.swing.JFrame {
             if(DAO.Dataservice.Connect())
             {
             // Tạo một thể hiện mới của Main và truyền thông tin phiên vào đó
-            MAIN.Main m = new Main();
+            MAIN.Main m = null;
+                try {
+                    m = new Main();
+                } catch (SQLException ex) {
+                    Logger.getLogger(GUI_LOGIN.class.getName()).log(Level.SEVERE, null, ex);
+                }
             m.setVisible(true);
             // Đóng cửa sổ đăng nhập
             this.dispose();
