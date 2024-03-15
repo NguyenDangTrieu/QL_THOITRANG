@@ -7,13 +7,10 @@ import DAO.Dataservice;
 import static DAO.Dataservice.conn;
 import GUI.GUI_TABLESPACE_ADD;
 import GUI.GUI_TABLESPACE_CREATE;
-import MAIN.Main;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -28,12 +25,12 @@ public class UI_TABLESPACEJPANEL extends javax.swing.JPanel {
     /**
      * Creates new form GUI_TABLESPACEJPANEL
      */
-    public UI_TABLESPACEJPANEL() throws SQLException {
+    public UI_TABLESPACEJPANEL() {
         initComponents();
         fillToTable(Jtable_showtablespaces);
         fillDataFilesToTable(Jtable_datafile);
-        MAIN.Main m = new  Main();
-        m.ThongBao(conn);
+        
+        
     }
 public static void fillToTable(JTable table) {
         ResultSet rs = null;
@@ -191,11 +188,7 @@ public static void searchAndFillTable(JTable table, String keyword) {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                try {
-                    new UI_TABLESPACEJPANEL().setVisible(true);
-                } catch (SQLException ex) {
-                    Logger.getLogger(UI_TABLESPACEJPANEL.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                new UI_TABLESPACEJPANEL().setVisible(true);
             }
         });
     }
@@ -400,4 +393,5 @@ public static void searchAndFillTable(JTable table, String keyword) {
         fillToTable(Jtable_showtablespaces);
         fillDataFilesToTable(Jtable_datafile);// Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
 }

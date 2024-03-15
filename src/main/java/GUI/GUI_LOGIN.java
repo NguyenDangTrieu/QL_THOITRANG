@@ -5,7 +5,6 @@
 package GUI;
 
 import MAIN.Main;
-import MODEL.MODEL_Session;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,7 +21,7 @@ public class GUI_LOGIN extends javax.swing.JFrame {
      */
     public GUI_LOGIN() {
         initComponents();
-        setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -139,23 +138,27 @@ public class GUI_LOGIN extends javax.swing.JFrame {
             DAO.Dataservice.database= database;
             DAO.Dataservice.user = user;
             DAO.Dataservice.pass = pass;
+            if(user.equals("sys")||user.equals("SYS")){
+                user+=" as sysdba";
+            }
             if(DAO.Dataservice.Connect())
             {
-            // Tạo một thể hiện mới của Main và truyền thông tin phiên vào đó
-            MAIN.Main m = null;
+                java.sql.Timestamp lastLoginTime = DAO.Dataservice.getLastLoginTime(user);
+                // Tạo một thể hiện mới của Main và truyền thông tin phiên vào đó
+                Main mainFrame = null;
                 try {
-                    m = new Main();
+                    mainFrame = new Main(user, lastLoginTime);
                 } catch (SQLException ex) {
                     Logger.getLogger(GUI_LOGIN.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            m.setVisible(true);
-            // Đóng cửa sổ đăng nhập
-            this.dispose();
-                
-            }else{
-               JOptionPane.showMessageDialog(rootPane, "Đăng Nhập Thất Bại!");
-                 
-            }
+                mainFrame.setVisible(true);
+                // Đóng cửa sổ đăng nhập
+                this.dispose();
+
+                }else{
+                   JOptionPane.showMessageDialog(rootPane, "Đăng Nhập Thất Bại!");
+
+                }
         }
         
     }//GEN-LAST:event_btnloginActionPerformed
