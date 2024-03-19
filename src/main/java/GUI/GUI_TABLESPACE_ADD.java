@@ -28,33 +28,26 @@ public class GUI_TABLESPACE_ADD extends javax.swing.JFrame {
         loadTablespaces(cmb_tablespaceName);
     }
     public void loadTablespaces(JComboBox<String> comboBox) {
-        Connection connection = null;
-        CallableStatement callableStatement = null;
-        ResultSet resultSet = null;
-        
-        try {
-            connection = DAO.Dataservice.Getconnect();
-            callableStatement = connection.prepareCall("{Proc_LoadTablespaces(?)}");
-            callableStatement.registerOutParameter(1, OracleTypes.CURSOR);
-            callableStatement.execute();
-            resultSet = (ResultSet) callableStatement.getObject(1);
-            
+    try (Connection connection = DAO.Dataservice.Getconnect();
+         CallableStatement callableStatement = connection.prepareCall("{call Proc_LoadTablespaces(?)}")) {
+
+        callableStatement.registerOutParameter(1, OracleTypes.CURSOR);
+        callableStatement.execute();
+
+        try (ResultSet resultSet = (ResultSet) callableStatement.getObject(1)) {
             comboBox.removeAllItems();
             while (resultSet.next()) {
                 String tablespaceName = resultSet.getString("tablespace_name");
                 comboBox.addItem(tablespaceName);
             }
-        } catch (SQLException e) {
-            System.out.println("Error executing stored procedure: " + e.getMessage());
-        } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-                if (callableStatement != null) callableStatement.close();
-            } catch (SQLException e) {
-                System.out.println("Error closing resources: " + e.getMessage());
-            }
         }
+    } catch (SQLException e) {
+        // Xử lý lỗi
+        JOptionPane.showMessageDialog(this, "Error loading tablespaces: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
     }
+}
+
     public void addDataFileToTablespace(String tablespaceName, String dataFileName, int fileSizeInMB) {
     
     DAO.Dataservice.Connect();
@@ -189,8 +182,14 @@ public class GUI_TABLESPACE_ADD extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Thiếu Dữ Liệu!!");
             return;
         }
-        addDataFileToTablespace((String)cmb_tablespaceName.getSelectedItem(), txt_datafilename.getText(), Integer.parseInt(txt_size.getText()));
-        this.dispose();
+        try {
+            addDataFileToTablespace((String)cmb_tablespaceName.getSelectedItem(), txt_datafilename.getText(), Integer.parseInt(txt_size.getText()));
+            JOptionPane.showMessageDialog(rootPane, "Thành Công!!");
+            this.dispose();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, "Thất Bại!");
+        }
+        
     }//GEN-LAST:event_btn_bosungActionPerformed
 
     private void btn_huuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_huuyActionPerformed

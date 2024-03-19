@@ -13,6 +13,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import oracle.jdbc.OracleTypes;
 
@@ -106,27 +108,31 @@ public static void searchAndFillTable(JTable table, String keyword) {
     }
 }
      public void dropTableSpace(String tablespaceName) {
-        try {
-            // Kết nối đến cơ sở dữ liệu
-            Connection connection = DAO.Dataservice.Getconnect();
-            
-            // Tạo callable statement để gọi stored procedure
-            String sql = "{call Proc_DropTableSpace(?)}";
-            CallableStatement callableStatement = connection.prepareCall(sql);
+    try {
+        // Kết nối đến cơ sở dữ liệu
+        Connection connection = DAO.Dataservice.Getconnect();
+        
+        // Tạo callable statement để gọi stored procedure
+        String sql = "{call Proc_DropTableSpace(?)}";
+        CallableStatement callableStatement = connection.prepareCall(sql);
 
-            // Đặt tham số cho stored procedure
-            callableStatement.setString(1, tablespaceName);
+        // Đặt tham số cho stored procedure
+        callableStatement.setString(1, tablespaceName);
 
-            // Thực thi stored procedure
-            callableStatement.execute();
-            // Hiển thị thông báo thành công
-            System.out.println("Tablespace " + tablespaceName + " dropped successfully.");
-        } catch (SQLException e) {
-            // Xử lý lỗi nếu có
-            e.printStackTrace();
-            System.out.println("Error dropping tablespace.");
-        }
+        // Thực thi stored procedure
+        callableStatement.execute();
+        
+        // Hiển thị thông báo thành công
+        JOptionPane.showMessageDialog(this, "Tablespace " + tablespaceName + " dropped successfully.");
+    } catch (SQLException e) {
+        // Hiển thị thông báo lỗi nếu có lỗi
+        JOptionPane.showMessageDialog(this, "Error dropping tablespace: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
     }
+}
+
+     
+     
 
     public static void fillDataFilesToTable(JTable table) {
         Connection connection = null;
@@ -161,37 +167,7 @@ public static void searchAndFillTable(JTable table, String keyword) {
             }
         }
     }
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GUI_TABLESPACE_CREATE.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GUI_TABLESPACE_CREATE.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GUI_TABLESPACE_CREATE.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GUI_TABLESPACE_CREATE.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new UI_TABLESPACEJPANEL().setVisible(true);
-            }
-        });
-    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -224,6 +200,12 @@ public static void searchAndFillTable(JTable table, String keyword) {
             }
         });
 
+        jScrollPane1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jScrollPane1MouseClicked(evt);
+            }
+        });
+
         Jtable_showtablespaces.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
@@ -235,6 +217,11 @@ public static void searchAndFillTable(JTable table, String keyword) {
                 "Tên TableSpace", "Tên OWNER"
             }
         ));
+        Jtable_showtablespaces.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Jtable_showtablespacesMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(Jtable_showtablespaces);
 
         btn_taodataspace.setText("Tạo DataSpace");
@@ -319,9 +306,8 @@ public static void searchAndFillTable(JTable table, String keyword) {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnxoatbspace, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(btn_bosungdatafile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btn_taodataspace, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)))
+                    .addComponent(btn_bosungdatafile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_taodataspace, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -362,16 +348,68 @@ public static void searchAndFillTable(JTable table, String keyword) {
         // Kiểm tra xem có dòng nào được chọn không
         if (selectedRow != -1) {
             // Lấy tên tablespace từ dòng được chọn
-            String tablespaceName = (String) Jtable_showtablespaces.getValueAt(selectedRow, 0); // Thay columnIndex bằng chỉ số cột chứa tên tablespace trong bảng của bạn
+            String tablespaceName = (String) Jtable_showtablespaces.getValueAt(selectedRow, 1); // Thay columnIndex bằng chỉ số cột chứa tên tablespace trong bảng của bạn
 
-            JOptionPane.showMessageDialog(this, tablespaceName);
             // Gọi phương thức xóa tablespace
-            //dropTableSpace(tablespaceName);
+            try {
+                dropTableSpace(tablespaceName);
+                refreshTable();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(jPanel1, "Lỗi Rồi!");
+            }
+            
         } else {
             // Hiển thị thông báo cho người dùng nếu không có dòng nào được chọn
             JOptionPane.showMessageDialog(this, "Vui lòng chọn một tablespace để xóa.", "Thông báo", JOptionPane.WARNING_MESSAGE);
         }
+        
     }//GEN-LAST:event_btnxoatbspaceActionPerformed
+
+    private void jScrollPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jScrollPane1MouseClicked
+
+    private void Jtable_showtablespacesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Jtable_showtablespacesMouseClicked
+       int selectedRow = Jtable_showtablespaces.getSelectedRow();
+
+    // Kiểm tra xem có dòng nào được chọn không
+    if (selectedRow != -1) {
+        // Lấy tên dataspace từ dòng được chọn
+        String dataspaceName = (String) Jtable_showtablespaces.getValueAt(selectedRow, 1); // Thay columnIndex bằng chỉ số cột chứa tên dataspace trong bảng của bạn
+
+        // Gọi phương thức để fill dữ liệu datafile cho dataspace này
+        fillDataFilesToTable(Jtable_datafile, dataspaceName);
+    }
+    }//GEN-LAST:event_Jtable_showtablespacesMouseClicked
+    public static void fillDataFilesToTable(JTable table, String dataspaceName) {
+        Connection connection = null;
+        CallableStatement callableStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = Dataservice.Getconnect();
+            callableStatement = connection.prepareCall("{call Proc_SelectDataFilesForTablespace(?, ?)}");
+
+            callableStatement.setString(1, dataspaceName);
+            callableStatement.registerOutParameter(2, OracleTypes.CURSOR);
+            callableStatement.execute();
+            resultSet = (ResultSet) callableStatement.getObject(2);
+
+            DefaultTableModel model = new DefaultTableModel(new String[]{"File_ID", "File_name", "Tablespace_name"}, 0);
+            while (resultSet.next()) {
+                int fileID = resultSet.getInt("file_ID");
+                String fileName = resultSet.getString("file_name");
+                String tablespaceName = resultSet.getString("tablespace_name");
+                model.addRow(new Object[]{fileID, fileName, tablespaceName});
+            }
+
+            table.setModel(model);
+            resultSet.close();
+            callableStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } //Do not close connection here if you want to keep it open
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

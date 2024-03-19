@@ -135,8 +135,13 @@ public class GUI_TABLESPACE_CREATE extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "LostData");
             return;
         }else{
+            try{
             createTableSpace(txt_tablespace_name.getText(),txt_datafilename.getText(), Integer.parseInt(txt_size.getText()));
+            JOptionPane.showMessageDialog(rootPane, "Thêm Thành Công!");
             this.dispose();
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(rootPane, "Thêm Lỗi!");
+            }
         }
     }//GEN-LAST:event_btncreateActionPerformed
 
@@ -144,27 +149,42 @@ public class GUI_TABLESPACE_CREATE extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btn_huyActionPerformed
      public void createTableSpace(String tablespaceName, String dataFileName, int fileSizeInMB) {
-        try {
-            // Kết nối đến cơ sở dữ liệu
-            Connection connection = DAO.Dataservice.Getconnect();
+    Connection connection = null;
+    CallableStatement callableStatement = null;
+    
+    try {
+        // Kết nối đến cơ sở dữ liệu
+        connection = DAO.Dataservice.Getconnect();
 
-            // Tạo callable statement để gọi stored procedure
-            String sql = "{call Proc_CreateTableSpace(?, ?, ?)}";
-            CallableStatement callableStatement = connection.prepareCall(sql);
+        // Tạo callable statement để gọi stored procedure
+        String sql = "{call Proc_CreateTableSpace(?, ?, ?)}";
+        callableStatement = connection.prepareCall(sql);
 
-            // Đặt các tham số cho stored procedure
-            callableStatement.setString(1, tablespaceName);
-            callableStatement.setString(2, dataFileName);
-            callableStatement.setInt(3, fileSizeInMB);
+        // Đặt các tham số cho stored procedure
+        callableStatement.setString(1, tablespaceName);
+        callableStatement.setString(2, dataFileName);
+        callableStatement.setInt(3, fileSizeInMB);
 
-            // Thực thi stored procedure
-            callableStatement.execute();
-            System.out.println("Tablespace " + tablespaceName + " created successfully.");
+        // Thực thi stored procedure
+        callableStatement.execute();
         } catch (SQLException e) {
-            // Xử lý lỗi nếu có
-            e.printStackTrace();
+        // Xử lý lỗi nếu có
+        e.printStackTrace();
+    } finally {
+        // Đóng tài nguyên
+        try {
+            if (callableStatement != null) {
+                callableStatement.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error closing resources: " + ex.getMessage());
         }
     }
+}
+
     /**
      * @param args the command line arguments
      */

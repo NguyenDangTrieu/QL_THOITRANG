@@ -8,6 +8,7 @@ import UI.UI_SessionManager;
 import static java.awt.image.ImageObserver.HEIGHT;
 import static DAO.Dataservice.conn;
 import SWING.EventMenuSelected;
+import UI.UI_Register;
 import UI.UI_TABLESPACEJPANEL;
 import java.awt.Color;
 import java.sql.Connection;
@@ -50,7 +51,15 @@ public class Main extends javax.swing.JFrame {
                     
                 } else if (index == 2) {
                     setForm(new UI_SessionManager());
-                } else if (index == 8) {
+                }else if(index ==7){
+                    if(DAO.Dataservice.user.equalsIgnoreCase("admin1"))
+                    {
+                        setForm(new UI_Register());
+                    }else{
+                        JOptionPane.showMessageDialog(rootPane, "Chỉ Admin mới vào chức năng này!!");
+                    }
+                    
+                }else if (index == 8) {
                     int confirmLogout = JOptionPane.showConfirmDialog(rootPane, "Bạn có chắc muốn đăng xuất?", "Xác nhận Đăng Xuất", JOptionPane.YES_NO_OPTION);
 
                     if (confirmLogout == JOptionPane.YES_OPTION) {
@@ -162,12 +171,13 @@ public class Main extends javax.swing.JFrame {
             panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(panelBorder1Layout.createSequentialGroup()
-                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField_ShowLastLoginTime)
+                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton_Exit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField_UserName)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jTextField_ShowLastLoginTime)
+                        .addComponent(jTextField_UserName)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(MainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 476, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
