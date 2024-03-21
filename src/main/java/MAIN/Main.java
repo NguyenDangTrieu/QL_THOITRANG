@@ -8,6 +8,7 @@ import UI.UI_SessionManager;
 import static java.awt.image.ImageObserver.HEIGHT;
 import static DAO.Dataservice.conn;
 import SWING.EventMenuSelected;
+import UI.UI_POLICY;
 import UI.UI_Register;
 import UI.UI_TABLESPACEJPANEL;
 import java.awt.Color;
@@ -51,6 +52,8 @@ public class Main extends javax.swing.JFrame {
                     
                 } else if (index == 2) {
                     setForm(new UI_SessionManager());
+                }else if(index ==6){
+                    setForm(new UI_POLICY());
                 }else if(index ==7){
                     if(DAO.Dataservice.user.equalsIgnoreCase("admin1"))
                     {
