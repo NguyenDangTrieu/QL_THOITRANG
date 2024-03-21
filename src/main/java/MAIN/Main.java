@@ -53,7 +53,11 @@ public class Main extends javax.swing.JFrame {
                 } else if (index == 2) {
                     setForm(new UI_SessionManager());
                 }else if(index ==6){
-                    setForm(new UI_POLICY());
+                    try {
+                        setForm(new UI_POLICY());
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }else if(index ==7){
                     if(DAO.Dataservice.user.equalsIgnoreCase("admin1"))
                     {

@@ -17,56 +17,46 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                          <Component id="jButton1" min="-2" pref="201" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="jcmb_tenbang" max="32767" attributes="0"/>
+                              <Component id="txt_policyname" max="32767" attributes="0"/>
+                              <Component id="txt_policy_action" alignment="1" min="-2" pref="209" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jButton1" min="-2" pref="201" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="txt_dscaccot" max="32767" attributes="0"/>
-                      <Component id="jcmb_tenbang" max="32767" attributes="0"/>
-                      <Component id="txt_policyname" max="32767" attributes="0"/>
-                      <Component id="txt_policycondittion" max="32767" attributes="0"/>
-                      <Component id="txt_policy_action" min="-2" pref="209" max="-2" attributes="0"/>
-                  </Group>
-              </Group>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace pref="36" max="32767" attributes="0"/>
-                      <Component id="jScrollPane1" min="-2" pref="327" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="109" max="-2" attributes="0"/>
-                      <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                  </Group>
-              </Group>
-          </Group>
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace max="32767" attributes="0"/>
-              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="122" max="-2" attributes="0"/>
+              <EmptySpace pref="36" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" min="-2" pref="327" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
           </Group>
           <Component id="Jtable_polict" alignment="0" max="32767" attributes="0"/>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="294" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="110" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+          </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -74,49 +64,42 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
                       <Component id="jLabel7" min="-2" pref="27" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jScrollPane1" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jcmb_tenbang" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="txt_dscaccot" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                              <Component id="txt_policyname" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
-                              <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <Group type="102" attributes="0">
+                              <EmptySpace pref="31" max="32767" attributes="0"/>
+                              <Component id="txt_policyname" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="txt_policycondittion" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel5" alignment="1" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="txt_policy_action" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jcmb_tenbang" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txt_policy_action" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                       <Component id="jButton1" min="-2" pref="33" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="156" max="32767" attributes="0"/>
-              <Component id="Jtable_polict" min="-2" pref="142" max="-2" attributes="0"/>
+              <EmptySpace pref="26" max="32767" attributes="0"/>
+              <Component id="Jtable_polict" min="-2" pref="191" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -138,28 +121,12 @@
         <Property name="text" type="java.lang.String" value="T&#xea;n B&#x1ea3;ng"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel3">
-      <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Segoe UI" size="14" style="1"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="Danh s&#xe1;ch c&#xe1;c c&#x1ed9;t"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="14" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="T&#xea;n C&#x1ee7;a policy:"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel5">
-      <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Segoe UI" size="14" style="1"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="&#x110;i&#x1ec1;u ki&#x1ec7;n cho policy:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel6">
@@ -189,7 +156,7 @@
           <Properties>
             <Property name="columns" type="int" value="20"/>
             <Property name="rows" type="int" value="5"/>
-            <Property name="text" type="java.lang.String" value="Allow Access (Cho ph&#xe9;p truy c&#x1ead;p):&#xa;&#xa;1 = 1: Cho ph&#xe9;p truy c&#x1ead;p v&#xe0;o d&#x1eef; li&#x1ec7;u m&#xe0; kh&#xf4;ng xem x&#xe9;t &#x111;i&#x1ec1;u ki&#x1ec7;n n&#xe0;o.&#xa;TRUE: T&#x1b0;&#x1a1;ng t&#x1ef1; nh&#x1b0; 1 = 1, cho ph&#xe9;p truy c&#x1ead;p m&#xe0; kh&#xf4;ng xem x&#xe9;t &#x111;i&#x1ec1;u ki&#x1ec7;n.&#xa;Deny Access (T&#x1eeb; ch&#x1ed1;i truy c&#x1ead;p):&#xa;&#xa;1 = 0: T&#x1ea5;t c&#x1ea3; c&#xe1;c truy c&#x1ead;p &#x111;&#x1ec1;u b&#x1ecb; t&#x1eeb; ch&#x1ed1;i.&#xa;FALSE: T&#x1ea5;t c&#x1ea3; c&#xe1;c truy c&#x1ead;p &#x111;&#x1ec1;u b&#x1ecb; t&#x1eeb; ch&#x1ed1;i."/>
+            <Property name="text" type="java.lang.String" value="SELECT: Ghi l&#x1ea1;i m&#x1ecd;i truy v&#x1ea5;n SELECT th&#x1ef1;c hi&#x1ec7;n tr&#xea;n b&#x1ea3;ng ho&#x1eb7;c &#x111;&#x1ed1;i t&#x1b0;&#x1ee3;ng &#x111;&#x1b0;&#x1ee3;c ch&#x1ec9; &#x111;&#x1ecb;nh.&#xa;&#xa;INSERT: Ghi l&#x1ea1;i m&#x1ecd;i truy v&#x1ea5;n INSERT th&#x1ef1;c hi&#x1ec7;n &#x111;&#x1ec3; ch&#xe8;n d&#x1eef; li&#x1ec7;u m&#x1edb;i v&#xe0;o b&#x1ea3;ng ho&#x1eb7;c &#x111;&#x1ed1;i t&#x1b0;&#x1ee3;ng &#x111;&#x1b0;&#x1ee3;c ch&#x1ec9; &#x111;&#x1ecb;nh.&#xa;&#xa;UPDATE: Ghi l&#x1ea1;i m&#x1ecd;i truy v&#x1ea5;n UPDATE th&#x1ef1;c hi&#x1ec7;n &#x111;&#x1ec3; c&#x1ead;p nh&#x1ead;t d&#x1eef; li&#x1ec7;u trong b&#x1ea3;ng ho&#x1eb7;c &#x111;&#x1ed1;i t&#x1b0;&#x1ee3;ng &#x111;&#x1b0;&#x1ee3;c ch&#x1ec9; &#x111;&#x1ecb;nh.&#xa;&#xa;DELETE: Ghi l&#x1ea1;i m&#x1ecd;i truy v&#x1ea5;n DELETE th&#x1ef1;c hi&#x1ec7;n &#x111;&#x1ec3; x&#xf3;a d&#x1eef; li&#x1ec7;u kh&#x1ecf;i b&#x1ea3;ng ho&#x1eb7;c &#x111;&#x1ed1;i t&#x1b0;&#x1ee3;ng &#x111;&#x1b0;&#x1ee3;c ch&#x1ec9; &#x111;&#x1ecb;nh.&#xa;&#xa;ALTER: Ghi l&#x1ea1;i m&#x1ecd;i truy v&#x1ea5;n ALTER th&#x1ef1;c hi&#x1ec7;n &#x111;&#x1ec3; thay &#x111;&#x1ed5;i c&#x1ea5;u tr&#xfa;c c&#x1ee7;a b&#x1ea3;ng ho&#x1eb7;c &#x111;&#x1ed1;i t&#x1b0;&#x1ee3;ng &#x111;&#x1b0;&#x1ee3;c ch&#x1ec9; &#x111;&#x1ecb;nh.&#xa;&#xa;CREATE: Ghi l&#x1ea1;i m&#x1ecd;i truy v&#x1ea5;n CREATE th&#x1ef1;c hi&#x1ec7;n &#x111;&#x1ec3; t&#x1ea1;o m&#x1edb;i c&#xe1;c &#x111;&#x1ed1;i t&#x1b0;&#x1ee3;ng trong c&#x1a1; s&#x1edf; d&#x1eef; li&#x1ec7;u, ch&#x1eb3;ng h&#x1ea1;n nh&#x1b0; b&#x1ea3;ng, ch&#x1ec9; m&#x1ee5;c, ho&#x1eb7;c th&#x1ee7; t&#x1ee5;c.&#xa;&#xa;DROP: Ghi l&#x1ea1;i m&#x1ecd;i truy v&#x1ea5;n DROP th&#x1ef1;c hi&#x1ec7;n &#x111;&#x1ec3; x&#xf3;a c&#xe1;c &#x111;&#x1ed1;i t&#x1b0;&#x1ee3;ng kh&#x1ecf;i c&#x1a1; s&#x1edf; d&#x1eef; li&#x1ec7;u.&#xa;&#xa;GRANT: Ghi l&#x1ea1;i m&#x1ecd;i truy v&#x1ea5;n GRANT th&#x1ef1;c hi&#x1ec7;n &#x111;&#x1ec3; c&#x1ea5;p quy&#x1ec1;n cho ng&#x1b0;&#x1edd;i d&#xf9;ng ho&#x1eb7;c vai tr&#xf2; trong c&#x1a1; s&#x1edf; d&#x1eef; li&#x1ec7;u.&#xa;&#xa;REVOKE: Ghi l&#x1ea1;i m&#x1ecd;i truy v&#x1ea5;n REVOKE th&#x1ef1;c hi&#x1ec7;n &#x111;&#x1ec3; thu h&#x1ed3;i quy&#x1ec1;n t&#x1eeb; ng&#x1b0;&#x1edd;i d&#xf9;ng ho&#x1eb7;c vai tr&#xf2; trong c&#x1a1; s&#x1edf; d&#x1eef; li&#x1ec7;u."/>
           </Properties>
         </Component>
       </SubComponents>
@@ -209,14 +176,7 @@
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JTextField" name="txt_dscaccot">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="...,...,..."/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JTextField" name="txt_policyname">
-    </Component>
-    <Component class="javax.swing.JTextField" name="txt_policycondittion">
     </Component>
     <Component class="javax.swing.JTextField" name="txt_policy_action">
     </Component>
