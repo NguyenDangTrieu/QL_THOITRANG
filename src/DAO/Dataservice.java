@@ -14,7 +14,7 @@ public class Dataservice {
     public static boolean Connect(){
         try {
             if(user.equalsIgnoreCase("sys")){
-                user += "as sysdba";
+                user += " as sysdba";
             }
             Class.forName("oracle.jdbc.driver.OracleDriver");
             conn = DriverManager.getConnection(url+database, user, pass);

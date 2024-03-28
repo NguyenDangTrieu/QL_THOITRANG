@@ -110,14 +110,13 @@ public class UI_SEETABLE extends javax.swing.JPanel {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2)
-                .addContainerGap())
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(296, 296, 296)
                 .addComponent(jLabel1)
                 .addContainerGap(280, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addComponent(jScrollPane2)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -125,8 +124,8 @@ public class UI_SEETABLE extends javax.swing.JPanel {
                 .addGap(5, 5, 5)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -159,8 +158,8 @@ public class UI_SEETABLE extends javax.swing.JPanel {
                         .addGap(35, 35, 35)
                         .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1))
-                .addGap(76, 76, 76)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -171,11 +170,15 @@ public class UI_SEETABLE extends javax.swing.JPanel {
         private DefaultTableModel tableModel;
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if(Dataservice.user.equals("admin1"))
+        {
+            callGetLowQuantityProductsStoredProcedure();
+        }
         try {
             con = Dataservice.Getconnect();           
             String selectedValue = jList1.getSelectedValue();
             // Tạo CallableStatement và đăng ký tham số
-            cs = con.prepareCall("{CALL PROC_BAI3(?, ?)}");
+            cs = con.prepareCall("{CALL admin1.PROC_BAI3(?, ?)}");
             cs.setString(1, selectedValue);
             cs.registerOutParameter(2, OracleTypes.CURSOR);
 
@@ -201,6 +204,56 @@ public class UI_SEETABLE extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+public void callGetLowQuantityProductsStoredProcedure() {
+        // Khai báo biến Connection, CallableStatement và ResultSet
+        Connection conn = null;
+        CallableStatement cstmt = null;
+        ResultSet rs = null;
+        try {
+            conn = Dataservice.Getconnect();
+            cstmt = conn.prepareCall("{call Proc_GetLowQuantityProducts(?)}");
+            cstmt.registerOutParameter(1, OracleTypes.CURSOR);
+
+            // Gọi stored procedure và nhận kết quả vào ResultSet
+            cstmt.execute();
+            rs = (ResultSet) cstmt.getObject(1);
+
+            // Kiểm tra xem ResultSet có dữ liệu hay không
+            boolean hasLowQuantityProducts = false;
+            StringBuilder message = new StringBuilder();
+            while (rs.next()) {
+                hasLowQuantityProducts = true; // Có ít nhất một mặt hàng có số lượng dưới 5
+                String tenSP = rs.getString("TenSP");
+                int soLuong = rs.getInt("SoLuong");
+                message.append("- ").append(tenSP).append(": ").append(soLuong).append("\n");
+            }
+
+            // Nếu có ít nhất một mặt hàng có số lượng dưới 5, hiển thị thông báo
+            if (hasLowQuantityProducts) {
+                message.insert(0, "Các mặt hàng có số lượng dưới 5:\n");
+                JOptionPane.showMessageDialog(null, message.toString(), "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Lỗi khi gọi stored procedure: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            // Đóng ResultSet, PreparedStatement và Connection trong phần finally để giải phóng tài nguyên
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
