@@ -60,7 +60,7 @@ public class Menu extends javax.swing.JPanel {
         listMenu1.addItem(new MODEL_Menu("", "TUẦN 4", MODEL_Menu.MenuType.TITLE));
         
         listMenu1.addItem(new MODEL_Menu("", "TUẦN 5", MODEL_Menu.MenuType.TITLE));
-        
+        listMenu1.addItem(new MODEL_Menu("17", "TR.Tao_User", MODEL_Menu.MenuType.MENU));
         listMenu1.addItem(new MODEL_Menu("", "", MODEL_Menu.MenuType.EMPTY));
     }
     @SuppressWarnings("unchecked")

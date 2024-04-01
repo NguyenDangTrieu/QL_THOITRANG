@@ -5,6 +5,7 @@ import static DAO.Dataservice.conn;
 import SWING.EventMenuSelected;
 import UI.UI_Audit_Policy;
 import UI.UI_BAI4;
+import UI.UI_CreateUserWithautomate;
 import UI.UI_Register;
 import UI.UI_SEETABLE;
 import UI.UI_SessionManager;
@@ -123,6 +124,9 @@ public class Main extends javax.swing.JFrame {
                     setForm(new UI.UI_PHANQUYEN_DT());                
                 }else if (index == 16){
                     setForm(new UI.UI_ROLE());
+                }else if(index == 19)
+                {
+                    setForm(new UI_CreateUserWithautomate());
                 }
             }
         });
